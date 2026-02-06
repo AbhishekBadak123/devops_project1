@@ -1,34 +1,15 @@
 
 # Live Streaming Project
 
-This repository contains **two real-world Kubernetes projects** built from scratch using Minikube.  
-Both projects focus on **practical DevOps learning**, real debugging, and production-like behavior.
+This repository contains **real-world Kubernetes projects** built from scratch using Minikube.  
+Projects focus on **practical DevOps learning**, real debugging, and production-like behavior.
 
 ---
 
-## 🚀 Projects Included
-
-### 1️⃣ Multi-Tier Web Application (E‑commerce style)
-A classic **3-tier architecture** deployed on Kubernetes.
-
-**Architecture**
-```
-Frontend (Nginx)
-   |
-Backend (API)
-   |
-MySQL Database (Persistent Storage)
-```
-
-**Components**
-- Frontend: Nginx + HTML
-- Backend: Application server
-- Database: MySQL with PVC
-- Secrets: Kubernetes Secrets for DB credentials
 
 ---
 
-### 2️⃣ Live Streaming Platform (YouTube‑like)
+### Live Streaming Platform (YouTube‑like)
 A **real-time video streaming system** using Kubernetes.
 
 **Architecture**
@@ -52,7 +33,6 @@ Browser / VLC Player
 - Minikube
 - Docker
 - NGINX & NGINX‑RTMP
-- MySQL
 - OBS Studio
 - RTMP & HLS
 - YAML (Kubernetes manifests)
@@ -62,17 +42,6 @@ Browser / VLC Player
 ## 📁 Repository Structure
 
 ```
-.
-├── frontend-configmap.yaml
-├── frontend-deployment.yaml
-├── frontend-service.yaml
-├── backend-configmap.yaml
-├── backend-deployment.yaml
-├── backend-service.yaml
-├── mysql-deployment.yaml
-├── mysql-service.yaml
-├── mysql-pvc.yaml
-├── mysql-secret.yaml
 ├── streaming-nginx-conf.yaml
 ├── streaming-deployment.yaml
 ├── streaming-service.yaml
@@ -99,29 +68,6 @@ minikube start --driver=virtualbox --no-vtx-check
 
 ---
 
-## ▶️ Deploy Multi‑Tier Application
-
-```bash
-kubectl apply -f mysql-secret.yaml
-kubectl apply -f mysql-pvc.yaml
-kubectl apply -f mysql-deployment.yaml
-kubectl apply -f mysql-service.yaml
-
-kubectl apply -f backend-configmap.yaml
-kubectl apply -f backend-deployment.yaml
-kubectl apply -f backend-service.yaml
-
-kubectl apply -f frontend-configmap.yaml
-kubectl apply -f frontend-deployment.yaml
-kubectl apply -f frontend-service.yaml
-```
-
-Access frontend:
-```bash
-minikube service frontend-service
-```
-
----
 
 ## ▶️ Deploy Live Streaming Platform
 
