@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Multi-Tier App</title>
+    </head>
+    <body>
+      <h1>Frontend (Nginx)</h1>
+      <button onclick="callBackend()">Call Backend</button>
+      <p id="response"></p>
+
+      <script>
+        function callBackend() {
+          fetch('http://backend-service:3000')
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById('response').innerText = data;
+            })
+            .catch(err => {
+              document.getElementById('response').innerText = 'Error calling backend';
+            });
+        }
+      </script>
+    </body>
+    </html>

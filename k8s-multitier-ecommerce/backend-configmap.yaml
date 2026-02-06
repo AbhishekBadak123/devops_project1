@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-code
+data:
+  app.js: |
+    const express = require('express');
+    const app = express();
+
+    app.get('/', (req, res) => {
+      res.send('Backend API is running');
+    });
+
+    app.listen(3000, () => {
+      console.log('Backend running on port 3000');
+    });
