@@ -1,81 +1,204 @@
-🚀 Project Overview
 
-This project implements a multi-tier live streaming architecture where:
-OBS Studio sends a live stream using RTMP
-NGINX-RTMP ingests and processes the stream
-The stream is converted to HLS (.m3u8 + .ts) format
-Viewers can watch the stream via a browser or video player
-Everything runs inside Kubernetes (Minikube)
+# Live Streaming Project
 
+This repository contains **two real-world Kubernetes projects** built from scratch using Minikube.  
+Both projects focus on **practical DevOps learning**, real debugging, and production-like behavior.
 
-🧰 Technologies Used
-Kubernetes
-Minikube
-NGINX-RTMP
+---
+
+## 🚀 Projects Included
+
+### 1️⃣ Multi-Tier Web Application (E‑commerce style)
+A classic **3-tier architecture** deployed on Kubernetes.
+
+**Architecture**
+```
+Frontend (Nginx)
+   |
+Backend (API)
+   |
+MySQL Database (Persistent Storage)
+```
+
+**Components**
+- Frontend: Nginx + HTML
+- Backend: Application server
+- Database: MySQL with PVC
+- Secrets: Kubernetes Secrets for DB credentials
+
+---
+
+### 2️⃣ Live Streaming Platform (YouTube‑like)
+A **real-time video streaming system** using Kubernetes.
+
+**Architecture**
+```
 OBS Studio
-RTMP & HLS Streaming
-Docker Containers
-YAML (Kubernetes Manifests)
+   |
+RTMP (1935)
+   |
+NGINX‑RTMP (Kubernetes Pod)
+   |
+HLS (.m3u8 + .ts)
+   |
+Browser / VLC Player
+```
 
-live-streaming-k8s/
-│
-├── streaming-nginx-conf.yaml     # NGINX RTMP & HLS configuration (ConfigMap)
-├── streaming-deployment.yaml     # Streaming server deployment
-├── streaming-service.yaml        # NodePort service for RTMP & HTTP
-├── README.md                     # Project documentation
+---
 
-▶️ Setup & Deployment Steps
-1️⃣ Start Minikube
+## 🧰 Technologies Used
+
+- Kubernetes
+- Minikube
+- Docker
+- NGINX & NGINX‑RTMP
+- MySQL
+- OBS Studio
+- RTMP & HLS
+- YAML (Kubernetes manifests)
+
+---
+
+## 📁 Repository Structure
+
+```
+.
+├── frontend-configmap.yaml
+├── frontend-deployment.yaml
+├── frontend-service.yaml
+├── backend-configmap.yaml
+├── backend-deployment.yaml
+├── backend-service.yaml
+├── mysql-deployment.yaml
+├── mysql-service.yaml
+├── mysql-pvc.yaml
+├── mysql-secret.yaml
+├── streaming-nginx-conf.yaml
+├── streaming-deployment.yaml
+├── streaming-service.yaml
+└── README.md
+```
+
+---
+
+## ⚙️ Prerequisites
+
+- Windows / Linux / macOS
+- Minikube installed
+- kubectl installed
+- VirtualBox (or supported Minikube driver)
+- OBS Studio (for streaming project)
+
+---
+
+## ▶️ Start Minikube
+
+```bash
 minikube start --driver=virtualbox --no-vtx-check
+```
 
-2️⃣ Deploy Kubernetes Resources
+---
+
+## ▶️ Deploy Multi‑Tier Application
+
+```bash
+kubectl apply -f mysql-secret.yaml
+kubectl apply -f mysql-pvc.yaml
+kubectl apply -f mysql-deployment.yaml
+kubectl apply -f mysql-service.yaml
+
+kubectl apply -f backend-configmap.yaml
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f backend-service.yaml
+
+kubectl apply -f frontend-configmap.yaml
+kubectl apply -f frontend-deployment.yaml
+kubectl apply -f frontend-service.yaml
+```
+
+Access frontend:
+```bash
+minikube service frontend-service
+```
+
+---
+
+## ▶️ Deploy Live Streaming Platform
+
+```bash
 kubectl apply -f streaming-nginx-conf.yaml
 kubectl apply -f streaming-deployment.yaml
 kubectl apply -f streaming-service.yaml
+```
 
-3️⃣ Verify Pod Status
+---
+
+## 🎥 OBS Configuration
+
+- Service: Custom
+- Server:
+```
+rtmp://<MINIKUBE_IP>:31935/live
+```
+- Stream Key:
+```
+test
+```
+
+---
+
+## 🌐 Watch Live Stream
+
+```
+http://<MINIKUBE_IP>:30080/live/test.m3u8
+```
+
+Use VLC or an HLS‑enabled browser/player.
+
+---
+
+## 🔍 How to Verify
+
+```bash
 kubectl get pods
-Expected:
-streaming-server   1/1   Running
+kubectl logs -f <streaming-pod-name>
+kubectl exec -it <streaming-pod-name> -- ls /tmp/hls/live
+```
 
-4️⃣ Get Minikube IP
-minikube ip
-Example:
-192.168.59.101
-
-🎥 OBS Studio Configuration
-
-Settings → Stream
-Service: Custom
-Server:rtmp://<MINIKUBE_IP>:31935/live
-Stream Key:test
-
-
-Click Start Streaming
-
-🌐 Watch the Live Stream
-Option 1: VLC Player
-
-Media → Open Network Stream
-
-http://<MINIKUBE_IP>:30080/live/test.m3u8
-
-Option 2: Browser (HLS compatible)
-http://<MINIKUBE_IP>:30080/live/test.m3u8
-
-🔍 How to Verify It’s Working
-Check RTMP connection logs
-kubectl logs -f streaming-server-<pod-name>
-
-
-Expected:
-connect: app='live'
-publish: name='test'
-
-Check HLS file generation
-kubectl exec -it streaming-server-<pod-name> -- ls /tmp/hls/live
-
-Expected:
+Expected files:
+```
 test.m3u8
 test0.ts
 test1.ts
+```
+
+---
+
+## 🧠 Key Learnings
+
+- Kubernetes is declarative
+- Controllers recreate pods automatically
+- Container filesystems can be read‑only
+- Correct use of ConfigMaps & volumes is critical
+- Debugging CrashLoopBackOff requires log analysis
+- Real DevOps learning comes from breaking & fixing systems
+
+---
+
+## 📌 Why This Project Matters
+
+- Real‑world DevOps use cases
+- Not a copy‑paste tutorial
+- Covers networking, storage, secrets & streaming
+- Portfolio & interview‑ready
+- Demonstrates persistence and problem‑solving
+
+---
+
+## 🙌 Final Note
+
+This project involved **significant debugging and hands‑on effort**.  
+If you are learning Kubernetes — build something real, face errors, and fix them.
+
+⭐ If you find this useful, consider starring the repo!
+
