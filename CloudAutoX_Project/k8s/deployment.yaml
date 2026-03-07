@@ -1,0 +1,20 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudautox-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudautox
+  template:
+    metadata:
+      labels:
+        app: cloudautox
+    spec:
+      containers:
+      - name: cloudautox-container
+        image: <dockerhub-username>/cloudautox:v1
+        ports:
+        - containerPort: 5000

@@ -1,0 +1,14 @@
+
+---
+- name: Provision EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Launch EC2 instance
+    amazon.aws.ec2_instance:
+      name: cloudautox-instance
+      instance_type: t2.medium
+      image_id: <AMI_ID>
+      region: ap-south-1
+      wait: yes

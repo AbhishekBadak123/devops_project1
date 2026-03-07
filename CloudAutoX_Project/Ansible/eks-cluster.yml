@@ -1,0 +1,10 @@
+
+---
+- name: Create AWS EKS Cluster
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+  - name: Create EKS cluster
+    shell: |
+      eksctl create cluster       --name cloudautox-cluster       --region ap-south-1       --node-type t2.medium       --nodes 1       --managed=false
