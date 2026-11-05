@@ -7,7 +7,7 @@ def home():
     return "Hello, Flask!"
 
 def lwphone():
-    return "LW Phone Function"
+    return "LW TelePhone Function"
 
 
 app.run(host="0.0.0.0")
