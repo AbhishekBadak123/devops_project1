@@ -1,4 +1,4 @@
 from app import lwphone
 
 def lwphone():
-    return "LW TelePhone Function"
+    return "LW Phone Function"
